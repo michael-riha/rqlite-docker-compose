@@ -21,3 +21,8 @@
 
 🥳 now in the folder `backup-node1` you should see the file `.backup bak.sqlite3` which has all the data create in `rqlite-node1` replicated ✅
 
+# Teardown
+
+TODO: find out why but if you keep the persistant volumes it had issues, so we delete them to clean up
+
+`docker compose down --volumes`
