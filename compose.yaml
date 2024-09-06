@@ -7,9 +7,13 @@ services:
       - "4001:4001"
       - "4002:4002"
     volumes:
-      - ./backup-node1:/root/backup
-      - rqlite-node1-data:/rqlite/file/data
+      - ./volumes-node1/backups:/root/backups
+      - ./volumes-node1/db/:/rqlite/file/data/
+      # - rqlite-node1-data:/rqlite/file/data
     command: ["-node-id", "node1", "-http-addr", "0.0.0.0:4001", "-raft-addr", "0.0.0.0:4002", "-raft-log-level=INFO"]
+    # https://hub.docker.com/r/rqlite/rqlite#:~:text=to%201.-,Environment%20variables,-The%20Docker%20image
+    # environment:
+    #   - name=value
 
   rqlite-node2:
     image: rqlite/rqlite:latest
@@ -17,7 +21,7 @@ services:
       - "4003:4001"
       - "4004:4002"
     volumes:
-      - ./backup-node2:/root/backup
+      - ./volumes-node2/backups:/root/backups
       - rqlite-node2-data:/rqlite/file/data
     command: ["-node-id", "node2", "-http-addr", "0.0.0.0:4001", "-raft-addr", "0.0.0.0:4002", "-join", "rqlite-node1:4002"]
 
@@ -27,7 +31,7 @@ services:
       - "4005:4001"
       - "4006:4002"
     volumes:
-      - ./backup-node3:/root/backup
+      - ./volumes-node2/backups:/root/backups
       - rqlite-node3-data:/rqlite/file/data
     # entrypoint: tail -f /dev/null
     command: ["-node-id", "node3", "-http-addr", "0.0.0.0:4001", "-raft-addr", "0.0.0.0:4002", "-join", "rqlite-node1:4002"]

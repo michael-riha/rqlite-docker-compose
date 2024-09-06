@@ -1,3 +1,6 @@
-backup-node1/*
-backup-node2/*
-backup-node3/*
+volumes-node1/backups/*
+volumes-node1/db/*
+volumes-node2/backups/*
+volumes-node2/db/*
+volumes-node3/backups/*
+volumes-node3/db/*
