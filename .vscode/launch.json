@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Docker: Attach to Bun",
+      "type": "node",
+      "request": "attach",
+      "port": 6499,
+      "address": "localhost",
+      "restart": true,
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/app"
+    },
+    {
+      "type": "bun",
+      "request": "attach",
+      "name": "Attach to Bun",
+      // The URL of the WebSocket inspector to attach to.
+      // This value can be retrieved by using `bun --inspect`.
+      // "url": "ws://localhost:6499/",
+      "url": "ws://127.0.0.1:6499/forcingPrefix", // https://github.com/oven-sh/bun/issues/7490
+      // "localRoot": "${workspaceFolder}",
+      // "remoteRoot": "/app"
+    }
+  ]
+}

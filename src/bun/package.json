@@ -1,0 +1,14 @@
+{
+  "name": "bun-sqlite-example",
+  "version": "1.0.0",
+  "description": "A simple Bun project to open an SQLite database and list all tables",
+  "main": "index.ts",
+  "scripts": {
+    "start": "bun run app.ts"
+  },
+  "dependencies": {
+   
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}

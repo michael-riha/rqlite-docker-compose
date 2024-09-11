@@ -1,5 +1,8 @@
 # version: '3.7'
 
+include:
+  - ./src/bun/compose.yaml  #with serviceB declared
+
 services:
   rqlite-node1:
     image: rqlite/rqlite:latest
@@ -35,6 +38,14 @@ services:
       - rqlite-node3-data:/rqlite/file/data
     # entrypoint: tail -f /dev/null
     command: ["-node-id", "node3", "-http-addr", "0.0.0.0:4001", "-raft-addr", "0.0.0.0:4002", "-join", "rqlite-node1:4002"]
+  sqlite-ui:
+    image: coleifer/sqlite-web
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./volumes-node1/db:/data
+    environment:
+      - SQLITE_DATABASE=db.sqlite
 
 volumes:
   rqlite-node1-data:

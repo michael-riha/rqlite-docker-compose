@@ -1,0 +1,27 @@
+ # version: '3.8' #WARN: `version` is obsolete 
+services:
+  bun-app:
+    build: .
+    ports:
+      - "3000:3000"
+      - "6499:6499"  # Port for remote debugging
+    volumes:
+      - ../../volumes-node1/db:/app/db
+      - ./:/app/
+      #HACK:
+      # -  .:/Users/michael.riha/Projects/bonrepublic/user-attribute-injection-service
+      # - /app/node_modules
+      # - /Users/michael.riha/Projects/bonrepublic/user-attribute-injection-service/node_modules #HACK for debuugging
+      # - /Users/michael.riha/Projects/bonrepublic/user-attribute-injection-service/bun.lockb
+    # entrypoint: tail -f /dev/null
+    command: ["--watch", "--inspect-wait=0.0.0.0:6499/forcingPrefix", "run", "app.ts"] # https://github.com/oven-sh/bun/issues/7490 # https://bun.sh/docs/runtime/hot # https://bun.sh/docs/runtime/debugger#inspect
+    # env_file: "mock.env"
+    # healthcheck:
+    #     # no wget, no curl so bash native -> 
+    #     # 1) exec 3<>/dev/tcp/localhost/3000: This creates a new file descriptor (number 3), 
+    #     # 2) sends an HTTP GET request to the server that's listening on the connected file descriptor, The echo command generates the HTTP headers and sends them to the server through file descriptor 3. The cat command then reads the response from file descriptor 3 
+    #     # 3) exec 3<&-: This closes file descriptor 3, effectively ending the connection to the server.
+    #     test: [ "CMD", "bash", "-c", "exec 3<>/dev/tcp/localhost/3000; echo -e 'GET /health HTTP/1.1\\r\\nHost: localhost:3000\\r\\n\\r\\n' >&3; cat <&3; exec 3<&-" ]
+    #     interval: 20s
+    #     timeout: 20s # native bash command needs some time to execute even after the request, no idea why?
+    #     retries: 3
